@@ -10,15 +10,15 @@ import java.util.List;
 @Getter
 @Setter
 @JsonDeserialize(using = ConvertEmployeeHierarchyInputDeserializer.class)
-public class ConvertEmployeeHierarchyInput {
+public class SaveEmployeeInput {
 
     private List<EmployeeDto> employeeDtos;
 
-    public ConvertEmployeeHierarchyInput() {
+    public SaveEmployeeInput() {
 
     }
 
-    public ConvertEmployeeHierarchyInput(List<EmployeeDto> employeeDtos) {
+    public SaveEmployeeInput(List<EmployeeDto> employeeDtos) {
         this.employeeDtos = employeeDtos;
     }
 

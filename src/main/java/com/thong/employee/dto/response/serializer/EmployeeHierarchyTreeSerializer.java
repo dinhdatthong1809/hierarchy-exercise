@@ -18,21 +18,20 @@ public class EmployeeHierarchyTreeSerializer extends JsonSerializer<EmployeeHier
                           JsonGenerator jsonGenerator,
                           SerializerProvider serializerProvider) throws IOException {
 
-        var rootNode = tree.getRootNode();
+        TreeNode<EmployeeDto> rootNode = tree.getRootNode();
 
         jsonGenerator.writeStartObject();
-        writeChildNodes(rootNode, jsonGenerator);
+        writeNode(rootNode, jsonGenerator);
         jsonGenerator.writeEndObject();
     }
 
-    private void writeChildNodes(TreeNode<EmployeeDto> parentNode, JsonGenerator jsonGenerator) throws IOException {
+    private void writeNode(TreeNode<EmployeeDto> parentNode, JsonGenerator jsonGenerator) throws IOException {
         jsonGenerator.writeFieldName(parentNode.getData().getId());
+
         jsonGenerator.writeStartObject();
-
         for (var childNode : parentNode.getChildNodes()) {
-            writeChildNodes(childNode, jsonGenerator);
+            writeNode(childNode, jsonGenerator);
         }
-
         jsonGenerator.writeEndObject();
     }
 

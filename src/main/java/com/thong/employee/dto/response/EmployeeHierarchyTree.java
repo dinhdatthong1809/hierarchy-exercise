@@ -26,6 +26,10 @@ public class EmployeeHierarchyTree {
             this.managerId = managerId;
         }
 
+        public EmployeeDto(String id) {
+            this(id, null);
+        }
+
     }
 
 }
