@@ -18,10 +18,8 @@ public class EmployeeHierarchyTreeSerializer extends JsonSerializer<EmployeeTree
                           JsonGenerator jsonGenerator,
                           SerializerProvider serializerProvider) throws IOException {
 
-        TreeNode<EmployeeDto> rootNode = tree.getRootNode();
-
         jsonGenerator.writeStartObject();
-        writeNode(rootNode, jsonGenerator);
+        writeNode(tree.getRootNode(), jsonGenerator);
         jsonGenerator.writeEndObject();
     }
 
@@ -29,7 +27,7 @@ public class EmployeeHierarchyTreeSerializer extends JsonSerializer<EmployeeTree
         jsonGenerator.writeFieldName(parentNode.getData().getId());
 
         jsonGenerator.writeStartObject();
-        for (var childNode : parentNode.getChildNodes()) {
+        for (TreeNode<EmployeeTree.EmployeeDto> childNode : parentNode.getChildNodes()) {
             writeNode(childNode, jsonGenerator);
         }
         jsonGenerator.writeEndObject();

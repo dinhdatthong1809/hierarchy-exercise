@@ -1,4 +1,0 @@
-jsonString
-{ "Pete": "Nick" }
-{ "Pete": "Nick", "Nick": "Sophie", "Sophie": "Jonas" }
-{ "Pete": "Nick", "Barbara": "Nick", "Nick": "Sophie", "Sophie": "Jonas" }
