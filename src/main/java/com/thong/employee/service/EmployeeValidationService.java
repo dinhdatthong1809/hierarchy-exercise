@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface EmployeeValidationService {
 
-    void validate(List<Employee> employees);
+    List<String> findEmployeeCycle(List<Employee> employees);
 
 }

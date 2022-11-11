@@ -47,7 +47,7 @@ class ConvertToEmployeeTreeIT {
         EmployeeTree employeeTree = employeeService.getEmployeeTree();
 
         String actual = jacksonTester.write(employeeTree).getJson();
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 
     private SaveEmployeeInput buildSaveEmployeeInput(String jsonString) {

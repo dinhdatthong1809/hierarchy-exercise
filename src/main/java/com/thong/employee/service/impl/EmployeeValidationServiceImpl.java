@@ -1,27 +1,29 @@
 package com.thong.employee.service.impl;
 
 import com.thong.employee.entity.Employee;
-import com.thong.employee.exception.BusinessException;
 import com.thong.employee.service.EmployeeValidationService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeValidationServiceImpl implements EmployeeValidationService {
 
     @Override
-    public void validate(List<Employee> employees) {
-        Map<String, String> employeeMap = employees.stream()
-                .collect(Collectors.toMap(Employee::getId, Employee::getManagerId));
+    public List<String> findEmployeeCycle(List<Employee> employees) {
+        Map<String, String> employeeMap = convertToMap(employees);
+        return detectCycle(employeeMap);
+    }
 
-        List<String> employeeCycle = detectCycle(employeeMap);
-        if (!employeeCycle.isEmpty()) {
-            throw BusinessException.of("The employee tree has cycle. Please check the cycle list: " + employeeCycle);
+    private Map<String, String> convertToMap(List<Employee> employees) {
+        Map<String, String> employeeMap = new LinkedHashMap<>();
+        for (Employee employee : employees) {
+            employeeMap.put(employee.getId(), employee.getManagerId());
         }
+        return employeeMap;
     }
 
     private List<String> detectCycle(Map<String, String> map) {

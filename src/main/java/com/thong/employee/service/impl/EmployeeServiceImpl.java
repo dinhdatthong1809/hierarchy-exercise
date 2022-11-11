@@ -3,6 +3,7 @@ package com.thong.employee.service.impl;
 import com.thong.employee.dto.request.SaveEmployeeInput;
 import com.thong.employee.dto.response.EmployeeTree;
 import com.thong.employee.entity.Employee;
+import com.thong.employee.exception.BusinessException;
 import com.thong.employee.mapper.InputMapper;
 import com.thong.employee.repository.EmployeeRepository;
 import com.thong.employee.service.EmployeeService;
@@ -31,8 +32,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeTree getEmployeeTree() {
         List<Employee> employees = employeeRepository.findAll();
-        employeeValidationService.validate(employees);
+        validate(employees);
         return employeeTreeBuilderService.buildEmployeeTree(employees);
+    }
+
+    private void validate(List<Employee> employees) {
+        List<String> employeeCycle = employeeValidationService.findEmployeeCycle(employees);
+        if (!employeeCycle.isEmpty()) {
+            throw BusinessException.of("The employee tree has cycle. Please check the cycle list: " + employeeCycle);
+        }
     }
 
     @Override
