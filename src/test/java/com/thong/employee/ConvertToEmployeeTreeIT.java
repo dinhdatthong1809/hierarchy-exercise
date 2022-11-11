@@ -37,7 +37,7 @@ class ConvertToEmployeeTreeIT {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = TEST_CASES_FOLDER + "/happy-cases/happy-cases.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/" + TEST_CASES_FOLDER + "/happy-cases/happy-cases.csv", numLinesToSkip = 1)
     void testHappyCases(String jsonFile) throws IOException {
 
         String input = JsonUtils.readJsonString(TEST_CASES_FOLDER + "/happy-cases/input/" + jsonFile);
