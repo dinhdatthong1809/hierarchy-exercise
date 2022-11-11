@@ -21,4 +21,13 @@ public class Employee implements Serializable {
     @Column(name = "managerId")
     private String managerId;
 
+    public Employee() {
+
+    }
+
+    public Employee(String id, String managerId) {
+        this.id = id;
+        this.managerId = managerId;
+    }
+
 }

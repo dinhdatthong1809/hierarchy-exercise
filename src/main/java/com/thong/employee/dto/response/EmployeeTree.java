@@ -6,11 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EmployeeHierarchyTree {
+public class EmployeeTree {
 
     private TreeNode<EmployeeDto> rootNode;
 
-    public EmployeeHierarchyTree(TreeNode<EmployeeDto> rootNode) {
+    public EmployeeTree(TreeNode<EmployeeDto> rootNode) {
         this.rootNode = rootNode;
     }
 

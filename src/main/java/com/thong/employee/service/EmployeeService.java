@@ -1,12 +1,11 @@
 package com.thong.employee.service;
 
-import com.thong.employee.dto.request.GetEmployeeHierarchyTreeCriteria;
 import com.thong.employee.dto.request.SaveEmployeeInput;
-import com.thong.employee.dto.response.EmployeeHierarchyTree;
+import com.thong.employee.dto.response.EmployeeTree;
 
 public interface EmployeeService {
 
-    EmployeeHierarchyTree getEmployeeHierarchyTree(GetEmployeeHierarchyTreeCriteria criteria);
+    EmployeeTree getEmployeeTree();
 
     void saveEmployees(SaveEmployeeInput dto);
 

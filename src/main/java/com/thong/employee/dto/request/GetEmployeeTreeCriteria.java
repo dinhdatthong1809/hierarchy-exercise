@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GetEmployeeHierarchyTreeCriteria {
+public class GetEmployeeTreeCriteria {
 
     private String id;
 

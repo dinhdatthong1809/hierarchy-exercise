@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
-    @Query("SELECT managerId FROM Employee e WHERE managerId NOT IN (SELECT id FROM Employee e2)")
+    @Query("SELECT DISTINCT managerId FROM Employee e WHERE managerId NOT IN (SELECT id FROM Employee e2)")
     List<String> findRootManagerIds();
 
 }

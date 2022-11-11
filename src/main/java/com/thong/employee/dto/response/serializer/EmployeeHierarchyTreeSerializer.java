@@ -3,18 +3,18 @@ package com.thong.employee.dto.response.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.thong.employee.dto.response.EmployeeHierarchyTree;
-import com.thong.employee.dto.response.EmployeeHierarchyTree.EmployeeDto;
+import com.thong.employee.dto.response.EmployeeTree;
+import com.thong.employee.dto.response.EmployeeTree.EmployeeDto;
 import com.thong.employee.util.TreeNode;
 import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.IOException;
 
 @JsonComponent
-public class EmployeeHierarchyTreeSerializer extends JsonSerializer<EmployeeHierarchyTree> {
+public class EmployeeHierarchyTreeSerializer extends JsonSerializer<EmployeeTree> {
 
     @Override
-    public void serialize(EmployeeHierarchyTree tree,
+    public void serialize(EmployeeTree tree,
                           JsonGenerator jsonGenerator,
                           SerializerProvider serializerProvider) throws IOException {
 
