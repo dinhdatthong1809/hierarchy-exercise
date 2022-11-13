@@ -1,10 +1,8 @@
 package com.thong.employee.service.impl;
 
-import com.thong.employee.dto.request.SaveEmployeeInput;
 import com.thong.employee.dto.response.EmployeeTree;
 import com.thong.employee.entity.Employee;
 import com.thong.employee.exception.BusinessException;
-import com.thong.employee.mapper.InputMapper;
 import com.thong.employee.repository.EmployeeRepository;
 import com.thong.employee.service.EmployeeService;
 import com.thong.employee.service.EmployeeTreeBuilderService;
@@ -27,9 +25,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Autowired
-    private InputMapper inputMapper;
-
     @Override
     public EmployeeTree getEmployeeTree() {
         List<Employee> employees = employeeRepository.findAll();
@@ -38,11 +33,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<String> findManagersOfEmployee(String employeeId) {
+        getEmployee(employeeId);
+        return employeeRepository.findManagersOfEmployee(employeeId);
+    }
+
+    @Override
     @Transactional
-    public void saveEmployees(SaveEmployeeInput input) {
-        List<Employee> employees = inputMapper.map(input);
+    public void saveEmployees(List<Employee> employees) {
         employeeRepository.deleteAll();
         employeeRepository.saveAll(employees);
+    }
+
+    private Employee getEmployee(String employeeId) {
+        return employeeRepository.findById(employeeId)
+                .orElseThrow(() -> BusinessException.of("Employee does not exist with id = " + employeeId));
     }
 
     private void validate(List<Employee> employees) {

@@ -6,7 +6,6 @@ import com.thong.employee.mapper.InputMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class InputMapperImpl implements InputMapper {
@@ -20,7 +19,7 @@ public class InputMapperImpl implements InputMapper {
                     employee.setManagerId(employeeDto.getManagerId());
                     return employee;
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

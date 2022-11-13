@@ -12,7 +12,25 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
-    @Query("SELECT DISTINCT managerId FROM Employee e WHERE managerId NOT IN (SELECT id FROM Employee e2)")
+    @Query("""
+            SELECT DISTINCT managerId
+            FROM Employee e
+            WHERE managerId NOT IN (SELECT id FROM Employee e2)
+            """)
     List<String> findRootManagerIds();
+
+    @Query(value = """
+            WITH RECURSIVE all_managers AS (
+                SELECT id, manager_id
+                FROM employee
+                WHERE id = :employeeId
+            UNION
+                SELECT e.id, e.manager_id
+                FROM all_managers m
+                INNER JOIN employee e on m.manager_id = e.id
+            ) SELECT manager_id FROM all_managers
+            """,
+            nativeQuery = true)
+    List<String> findManagersOfEmployee(String employeeId);
 
 }

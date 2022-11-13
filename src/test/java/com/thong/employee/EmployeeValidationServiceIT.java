@@ -19,37 +19,42 @@ class EmployeeValidationServiceIT {
     private EmployeeValidationService employeeValidationService;
 
     private static Stream<Arguments> testFindEmployeeCycle() {
-        var input1 = List.of(
+        List<Employee> employees1 = List.of(
                 new Employee("Pete", "Nick"),
                 new Employee("Barbara", "Nick"),
                 new Employee("Nick", "Sophie"),
                 new Employee("Sophie", "Pete")
         );
 
-        var input2 = List.of(
+        List<Employee> employees2 = List.of(
                 new Employee("Barbara", "Nick"),
                 new Employee("Nick", "Barbara")
         );
 
-        var input3 = List.of(
+        List<Employee> employees3 = List.of(
                 new Employee("Pete", "Nick"),
                 new Employee("Barbara", "Nick"),
                 new Employee("Nick", "Sophie"),
                 new Employee("Sophie", "Jonas")
         );
 
+        List<Employee> employees4 = List.of(
+                new Employee("Nick", "Nick")
+        );
+
         return Stream.of(
-                Arguments.of(input1, new String[]{"Pete", "Nick", "Sophie", "Pete"}),
-                Arguments.of(input2, new String[]{"Barbara", "Nick", "Barbara"}),
-                Arguments.of(input3, new String[]{})
+                Arguments.of(employees1, List.of("Pete", "Nick", "Sophie", "Pete")),
+                Arguments.of(employees2, List.of("Barbara", "Nick", "Barbara")),
+                Arguments.of(employees3, List.of()),
+                Arguments.of(employees4, List.of("Nick", "Nick"))
         );
     }
 
     @ParameterizedTest
     @MethodSource("testFindEmployeeCycle")
-    void testFindEmployeeCycle(List<Employee> employees, String[] expectedCycle) {
-        List<String> employeeCycle = employeeValidationService.findEmployeeCycle(employees);
-        Assertions.assertArrayEquals(expectedCycle, employeeCycle.toArray());
+    void testFindEmployeeCycle(List<Employee> employees, List<String> expectedEmployeeCycle) {
+        List<String> actualEmployeeCycle = employeeValidationService.findEmployeeCycle(employees);
+        Assertions.assertIterableEquals(expectedEmployeeCycle, actualEmployeeCycle);
     }
 
 }

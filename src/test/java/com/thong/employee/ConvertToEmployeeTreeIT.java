@@ -3,6 +3,8 @@ package com.thong.employee;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thong.employee.dto.request.SaveEmployeeInput;
 import com.thong.employee.dto.response.EmployeeTree;
+import com.thong.employee.entity.Employee;
+import com.thong.employee.mapper.InputMapper;
 import com.thong.employee.service.EmployeeService;
 import com.thong.employee.util.JsonUtils;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +17,7 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -28,6 +30,9 @@ class ConvertToEmployeeTreeIT {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private InputMapper inputMapper;
 
     private JacksonTester<EmployeeTree> jacksonTester;
 
@@ -50,14 +55,14 @@ class ConvertToEmployeeTreeIT {
         Assertions.assertEquals(expected, actual);
     }
 
-    private SaveEmployeeInput buildSaveEmployeeInput(String jsonString) {
+    private List<Employee> buildSaveEmployeeInput(String jsonString) {
         var map = JsonUtils.toMap(jsonString);
 
         var employeeDtos = map.entrySet().stream()
                 .map(entry -> new SaveEmployeeInput.EmployeeDto((String) entry.getKey(), (String) entry.getValue()))
-                .collect(Collectors.toList());
+                .toList();
 
-        return new SaveEmployeeInput(employeeDtos);
+        return inputMapper.map(new SaveEmployeeInput(employeeDtos));
     }
 
 }
