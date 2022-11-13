@@ -7,6 +7,7 @@ import com.thong.employee.repository.EmployeeRepository;
 import com.thong.employee.service.EmployeeService;
 import com.thong.employee.service.EmployeeTreeBuilderService;
 import com.thong.employee.service.EmployeeValidationService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private void validate(List<Employee> employees) {
         List<String> employeeCycle = employeeValidationService.findEmployeeCycle(employees);
-        if (!employeeCycle.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(employeeCycle)) {
             throw BusinessException.of("The employee tree has cycle. Please check the cycle list: " + employeeCycle);
         }
     }

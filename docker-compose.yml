@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  app:
+    image: 'thong-exercise-employee-hierarchy'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/employee-hierarchy
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - APP_BASIC_AUTH_USERNAME=Personia
+      - APP_BASIC_AUTH_PASSWORD=Personia
+
+  db:
+    image: 'postgres'
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=employee-hierarchy
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
