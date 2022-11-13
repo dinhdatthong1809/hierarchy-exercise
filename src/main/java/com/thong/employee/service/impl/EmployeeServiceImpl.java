@@ -11,6 +11,7 @@ import com.thong.employee.service.EmployeeTreeBuilderService;
 import com.thong.employee.service.EmployeeValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,18 +37,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeTreeBuilderService.buildEmployeeTree(employees);
     }
 
+    @Override
+    @Transactional
+    public void saveEmployees(SaveEmployeeInput input) {
+        List<Employee> employees = inputMapper.map(input);
+        employeeRepository.deleteAll();
+        employeeRepository.saveAll(employees);
+    }
+
     private void validate(List<Employee> employees) {
         List<String> employeeCycle = employeeValidationService.findEmployeeCycle(employees);
         if (!employeeCycle.isEmpty()) {
             throw BusinessException.of("The employee tree has cycle. Please check the cycle list: " + employeeCycle);
         }
-    }
-
-    @Override
-    public void saveEmployees(SaveEmployeeInput input) {
-        List<Employee> employees = inputMapper.map(input);
-        employeeRepository.deleteAll();
-        employeeRepository.saveAll(employees);
     }
 
 }
