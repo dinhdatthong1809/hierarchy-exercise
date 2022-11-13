@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "06503098-f569-42a2-8931-96a6c2657ede",
+		"name": "employee-hierarchy-excercise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11102051"
+	},
+	"item": [
+		{
+			"name": "convertEmployeeHierarchy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Personia",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Personia",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Pete\": \"Nick\",\n    \"Barbara\": \"Nick\",\n    \"Nick\": \"Sophie\",\n    \"Sophie\": \"Jonas\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/employees",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEmployeeHierarchyTree",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Personia",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Personia",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/employees",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllManagersOfEmployee",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Personia",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Personia",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/employees/Nick/managers",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"employees",
+						"Nick",
+						"managers"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "Nick"
+		}
+	]
+}

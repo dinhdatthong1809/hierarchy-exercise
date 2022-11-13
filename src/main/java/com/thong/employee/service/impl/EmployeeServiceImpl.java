@@ -39,6 +39,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findManagersOfEmployee(employeeId);
     }
 
+    /**
+     * I chose to reset the employee list
+     * because allowing user to update a part of employee list would be more complicated
+     */
     @Override
     @Transactional
     public void saveEmployees(List<Employee> employees) {
