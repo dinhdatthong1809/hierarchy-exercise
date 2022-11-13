@@ -1,7 +1,7 @@
 ### How to run in local
 **Make sure port `8080` and `5432` is free.**
 
-In folder `employee`, run
+In `project folder`, run
 1. Turn Spring boot application into Docker image
    - `mvn clean package`
    - `docker build -t thong-exercise-employee-hierarchy .`
@@ -12,7 +12,7 @@ In folder `employee`, run
 - PostgreSQL database runs on port `5432`
 
 ### How to test APIs in local
-Using Postman, please go to `employee` folder and import collection file `employee-hierarchy-excercise.postman_collection.json` into Postman
+Using Postman, please go to `project folder` and import collection file `employee-hierarchy-excercise.postman_collection.json` into Postman
 
 ### To start the application in IDE (IntelliJ IDEA is recommended)
 Make sure the application or integration tests run with environment variables (please adapt the value based on your environment):
