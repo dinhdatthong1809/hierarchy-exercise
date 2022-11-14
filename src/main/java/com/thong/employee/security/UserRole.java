@@ -1,4 +1,4 @@
-package com.thong.employee.security.role;
+package com.thong.employee.security;
 
 public enum UserRole {
 

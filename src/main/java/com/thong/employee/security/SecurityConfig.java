@@ -1,4 +1,4 @@
-package com.thong.employee.security.role;
+package com.thong.employee.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
