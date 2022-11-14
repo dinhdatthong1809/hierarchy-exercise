@@ -19,7 +19,7 @@ Make sure the application or integration tests run with environment variables (p
 ```
 SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5455/test;
 SPRING_DATASOURCE_PASSWORD=postgres;
-SPRING_DATASOURCE_USERNAME=postgres
+SPRING_DATASOURCE_USERNAME=postgres;
 ```
 
 Thank you
