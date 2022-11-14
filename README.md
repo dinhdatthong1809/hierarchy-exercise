@@ -1,5 +1,5 @@
 ### How to run in local
-**Make sure port `8080` and `5432` is free.**
+**Make sure port `8080` and `5432` are free.**
 
 In `project folder`, run
 1. Turn Spring boot application into Docker image
