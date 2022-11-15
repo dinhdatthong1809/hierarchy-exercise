@@ -21,13 +21,17 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
     @Query(value = """
             WITH RECURSIVE all_managers AS (
-                SELECT id, manager_id
+                SELECT
+                    id,
+                    manager_id
                 FROM employee
                 WHERE id = :employeeId
             UNION
-                SELECT e.id, e.manager_id
+                SELECT
+                    e.id,
+                    e.manager_id
                 FROM all_managers m
-                INNER JOIN employee e on m.manager_id = e.id
+                INNER JOIN employee e ON m.manager_id = e.id
             ) SELECT manager_id FROM all_managers
             """,
             nativeQuery = true)
