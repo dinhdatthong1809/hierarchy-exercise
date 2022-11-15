@@ -2,6 +2,7 @@ package com.thong.employee.service.impl;
 
 import com.thong.employee.entity.Employee;
 import com.thong.employee.service.EmployeeValidationService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,13 +31,22 @@ public class EmployeeValidationServiceImpl implements EmployeeValidationService 
         for (Map.Entry<String, String> entry : map.entrySet()) {
             List<String> visitedNodes = new ArrayList<>();
             visitNextItem(entry.getKey(), map, visitedNodes);
-            boolean hasCycle = visitedNodes.size() > 1 && visitedNodes.get(0).equals(visitedNodes.get(visitedNodes.size() - 1));
-            if (hasCycle) {
+            if (hasCycle(visitedNodes)) {
                 return visitedNodes;
             }
         }
 
         return List.of();
+    }
+
+    private boolean hasCycle(List<String> visitedNodes) {
+        if (CollectionUtils.size(visitedNodes) <= 1) {
+            return false;
+        }
+
+        String first = visitedNodes.get(0);
+        String last = visitedNodes.get(visitedNodes.size() - 1);
+        return first.equals(last);
     }
 
     private void visitNextItem(String currentItem, Map<String, String> itemMap, List<String> visitedItems) {
