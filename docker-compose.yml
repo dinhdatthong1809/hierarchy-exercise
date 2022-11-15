@@ -5,6 +5,9 @@ services:
   app:
     image: 'thong-exercise-employee-hierarchy'
     container_name: 'employee-hierarchy-app'
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
     ports:
       - "8080:8080"
     depends_on:
