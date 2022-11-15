@@ -1,8 +1,10 @@
 version: '3.3'
 
 services:
+
   app:
     image: 'thong-exercise-employee-hierarchy'
+    container_name: 'employee-hierarchy-app'
     ports:
       - "8080:8080"
     depends_on:
@@ -17,6 +19,7 @@ services:
 
   db:
     image: 'postgres'
+    container_name: 'employee-hierarchy-db'
     ports:
       - "5432:5432"
     environment:
