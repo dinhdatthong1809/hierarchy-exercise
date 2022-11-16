@@ -11,6 +11,8 @@ public interface EmployeeService {
 
     List<String> findManagersOfEmployee(String employeeId);
 
+    List<String> findRootManagerIds(List<Employee> employees);
+
     void saveEmployees(List<Employee> employees);
 
 }

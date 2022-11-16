@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -29,7 +31,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeTree getEmployeeTree() {
         List<Employee> employees = employeeRepository.findAll();
-        validate(employees);
         return employeeTreeBuilderService.buildEmployeeTree(employees);
     }
 
@@ -39,6 +40,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findManagersOfEmployee(employeeId);
     }
 
+    @Override
+    public List<String> findRootManagerIds(List<Employee> employees) {
+        Set<String> employeeIds = employees.stream().map(Employee::getId).collect(Collectors.toSet());
+        return employees.stream()
+                .map(Employee::getManagerId)
+                .filter(managerId -> !employeeIds.contains(managerId))
+                .toList();
+    }
+
     /**
      * I chose to reset the employee list
      * because allowing user to update a part of employee list would be more complicated
@@ -46,6 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public void saveEmployees(List<Employee> employees) {
+        validate(employees);
         employeeRepository.deleteAll();
         employeeRepository.saveAll(employees);
     }
@@ -56,6 +67,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private void validate(List<Employee> employees) {
+        List<String> rootManagerIds = findRootManagerIds(employees);
+        if (CollectionUtils.size(rootManagerIds) > 1) {
+            throw BusinessException.of("Should not contain more than 1 root manager in the employee tree. Root manager ids are " + rootManagerIds);
+        }
+
         List<String> employeeCycle = employeeValidationService.findEmployeeCycle(employees);
         if (CollectionUtils.isNotEmpty(employeeCycle)) {
             throw BusinessException.of("The employee tree has cycle. Please check the cycle list: " + employeeCycle);
