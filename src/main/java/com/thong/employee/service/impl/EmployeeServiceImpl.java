@@ -3,6 +3,8 @@ package com.thong.employee.service.impl;
 import com.thong.employee.dto.response.EmployeeTree;
 import com.thong.employee.entity.Employee;
 import com.thong.employee.exception.BusinessException;
+import com.thong.employee.exception.ResourceNotFoundException;
+import com.thong.employee.exception.enums.ErrorCode;
 import com.thong.employee.repository.EmployeeRepository;
 import com.thong.employee.service.EmployeeService;
 import com.thong.employee.service.EmployeeTreeBuilderService;
@@ -62,19 +64,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private Employee getEmployee(String employeeId) {
-        return employeeRepository.findById(employeeId)
-                .orElseThrow(() -> BusinessException.of("Employee does not exist with id = " + employeeId));
+        return employeeRepository.findById(employeeId).orElseThrow(ResourceNotFoundException::of);
     }
 
     private void validate(List<Employee> employees) {
         List<String> rootManagerIds = findRootManagerIds(employees);
         if (CollectionUtils.size(rootManagerIds) > 1) {
-            throw BusinessException.of("Should not contain more than 1 root manager in the employee tree. Root manager ids are " + rootManagerIds);
+            throw BusinessException.of(ErrorCode.MULTIPLE_ROOT_MANAGERS, rootManagerIds);
         }
 
         List<String> employeeCycle = employeeValidationService.findEmployeeCycle(employees);
         if (CollectionUtils.isNotEmpty(employeeCycle)) {
-            throw BusinessException.of("The employee tree has cycle. Please check the cycle list: " + employeeCycle);
+            throw BusinessException.of(ErrorCode.DETECTED_EMPLOYEE_CYCLE, employeeCycle);
         }
     }
 

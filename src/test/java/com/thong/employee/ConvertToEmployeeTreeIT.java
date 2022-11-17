@@ -1,7 +1,7 @@
 package com.thong.employee;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thong.employee.dto.request.SaveEmployeeInput;
+import com.thong.employee.dto.request.EmployeeCreationInput;
 import com.thong.employee.dto.response.EmployeeTree;
 import com.thong.employee.entity.Employee;
 import com.thong.employee.mapper.InputMapper;
@@ -59,10 +59,10 @@ class ConvertToEmployeeTreeIT {
         var map = JsonUtils.toMap(jsonString);
 
         var employeeDtos = map.entrySet().stream()
-                .map(entry -> new SaveEmployeeInput.EmployeeDto((String) entry.getKey(), (String) entry.getValue()))
+                .map(entry -> new EmployeeCreationInput.EmployeeDto((String) entry.getKey(), (String) entry.getValue()))
                 .toList();
 
-        return inputMapper.map(new SaveEmployeeInput(employeeDtos));
+        return inputMapper.map(new EmployeeCreationInput(employeeDtos));
     }
 
 }

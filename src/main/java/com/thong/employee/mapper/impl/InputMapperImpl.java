@@ -1,6 +1,6 @@
 package com.thong.employee.mapper.impl;
 
-import com.thong.employee.dto.request.SaveEmployeeInput;
+import com.thong.employee.dto.request.EmployeeCreationInput;
 import com.thong.employee.entity.Employee;
 import com.thong.employee.mapper.InputMapper;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 public class InputMapperImpl implements InputMapper {
 
     @Override
-    public List<Employee> map(SaveEmployeeInput input) {
+    public List<Employee> map(EmployeeCreationInput input) {
         return input.getEmployeeDtos().stream()
                 .map(employeeDto -> {
                     Employee employee = new Employee();

@@ -4,15 +4,15 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.thong.employee.dto.request.SaveEmployeeInput;
-import com.thong.employee.dto.request.SaveEmployeeInput.EmployeeDto;
+import com.thong.employee.dto.request.EmployeeCreationInput;
+import com.thong.employee.dto.request.EmployeeCreationInput.EmployeeDto;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ConvertEmployeeHierarchyInputDeserializer extends StdDeserializer<SaveEmployeeInput> {
+public class ConvertEmployeeHierarchyInputDeserializer extends StdDeserializer<EmployeeCreationInput> {
 
     public ConvertEmployeeHierarchyInputDeserializer() {
         this(null);
@@ -23,7 +23,7 @@ public class ConvertEmployeeHierarchyInputDeserializer extends StdDeserializer<S
     }
 
     @Override
-    public SaveEmployeeInput deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
+    public EmployeeCreationInput deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
 
         List<EmployeeDto> employeeDtos = new ArrayList<>();
@@ -35,6 +35,6 @@ public class ConvertEmployeeHierarchyInputDeserializer extends StdDeserializer<S
             employeeDtos.add(new EmployeeDto(key, value));
         }
 
-        return new SaveEmployeeInput(employeeDtos);
+        return new EmployeeCreationInput(employeeDtos);
     }
 }

@@ -5,20 +5,23 @@ import com.thong.employee.dto.request.deserializer.ConvertEmployeeHierarchyInput
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Getter
 @Setter
 @JsonDeserialize(using = ConvertEmployeeHierarchyInputDeserializer.class)
-public class SaveEmployeeInput {
+public class EmployeeCreationInput {
 
-    private List<EmployeeDto> employeeDtos;
+    @NotEmpty(message = "Employee list must not be empty")
+    private List<@Valid EmployeeDto> employeeDtos;
 
-    public SaveEmployeeInput() {
+    public EmployeeCreationInput() {
 
     }
 
-    public SaveEmployeeInput(List<EmployeeDto> employeeDtos) {
+    public EmployeeCreationInput(List<EmployeeDto> employeeDtos) {
         this.employeeDtos = employeeDtos;
     }
 
@@ -26,7 +29,9 @@ public class SaveEmployeeInput {
     @Setter
     public static class EmployeeDto {
 
+        @NotEmpty(message = "Employee id must not be null or empty")
         private String id;
+        @NotEmpty(message = "Employee managerId must not be null or empty")
         private String managerId;
 
         public EmployeeDto(String id, String managerId) {

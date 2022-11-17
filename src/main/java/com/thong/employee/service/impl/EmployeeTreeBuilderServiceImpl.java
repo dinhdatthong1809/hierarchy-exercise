@@ -3,6 +3,7 @@ package com.thong.employee.service.impl;
 import com.thong.employee.dto.response.EmployeeTree;
 import com.thong.employee.entity.Employee;
 import com.thong.employee.exception.BusinessException;
+import com.thong.employee.exception.enums.ErrorCode;
 import com.thong.employee.repository.EmployeeRepository;
 import com.thong.employee.service.EmployeeTreeBuilderService;
 import com.thong.employee.util.TreeNode;
@@ -46,7 +47,7 @@ public class EmployeeTreeBuilderServiceImpl implements EmployeeTreeBuilderServic
     private String findRootManagerId() {
         List<String> rootManagerIds = employeeRepository.findRootManagerIds();
         if (rootManagerIds.size() > 1) {
-            throw BusinessException.of("Should not contain more than 1 root manager in the employee tree. Root manager ids are " + rootManagerIds);
+            throw BusinessException.of(ErrorCode.DETECTED_EMPLOYEE_CYCLE, rootManagerIds);
         }
         return rootManagerIds.get(0);
     }
