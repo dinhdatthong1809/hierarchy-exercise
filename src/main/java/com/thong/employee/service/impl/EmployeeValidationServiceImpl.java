@@ -29,23 +29,23 @@ public class EmployeeValidationServiceImpl implements EmployeeValidationService 
 
     private List<String> detectCycle(Map<String, String> map) {
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            List<String> visitedNodes = new ArrayList<>();
-            visitNextItem(entry.getKey(), map, visitedNodes);
-            if (hasCycle(visitedNodes)) {
-                return visitedNodes;
+            List<String> visitedItems = new ArrayList<>();
+            visitNextItem(entry.getKey(), map, visitedItems);
+            if (hasCycle(visitedItems)) {
+                return visitedItems;
             }
         }
 
         return List.of();
     }
 
-    private boolean hasCycle(List<String> visitedNodes) {
-        if (CollectionUtils.size(visitedNodes) <= 1) {
+    private boolean hasCycle(List<String> visitedItems) {
+        if (CollectionUtils.size(visitedItems) <= 1) {
             return false;
         }
 
-        String first = visitedNodes.get(0);
-        String last = visitedNodes.get(visitedNodes.size() - 1);
+        String first = visitedItems.get(0);
+        String last = visitedItems.get(visitedItems.size() - 1);
         return first.equals(last);
     }
 
